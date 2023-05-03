@@ -1,0 +1,23 @@
+﻿<Window x:Class="CustomerManagementSystem.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomerManagementSystem"
+        mc:Ignorable="d"
+        Title="Главное меню" Height="260" Width="300" ResizeMode="NoResize">
+    <StackPanel VerticalAlignment="Center" Margin="30 0 30 0" Height="220">
+
+        <Label Content="Главное меню" HorizontalAlignment="Center" FontSize="15"/>
+
+
+        <Button Content="Товары" Margin="0 10 0 0"  Height="25"/>
+        <Button Content="Продажи" Margin="0 10 0 0"  Height="25" />
+        <Button Content="Заказы" Margin="0 10 0 0"  Height="25" />
+        <Button Content="Сотрудники" Margin="0 10 0 0"  Height="25"/>
+        <Button Content="Поставщики" Margin="0 10 0 0"  Height="25"/>
+
+
+
+    </StackPanel>
+</Window>

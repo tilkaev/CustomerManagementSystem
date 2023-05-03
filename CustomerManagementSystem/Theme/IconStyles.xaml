@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+
+    <Style TargetType="materialDesign:PackIcon"
+           x:Key="IconStyle">
+        <Setter Property="Foreground"
+                Value="Gray" />
+        <Setter Property="Margin"
+                Value="5 0" />
+        <Setter Property="Width"
+                Value="25" />
+        <Setter Property="Height"
+                Value="25" />
+        <Setter Property="Background"
+                Value="Transparent" />
+    </Style>
+    
+    
+    <Style BasedOn="{StaticResource IconStyle}"
+           TargetType="materialDesign:PackIcon"
+           x:Key="IconStyleLeft">
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+        <Setter Property="Margin"
+                Value="5 10 0 0" />
+        <Setter Property="Foreground"
+                Value="#fff" />
+    </Style>
+    
+    
+</ResourceDictionary>
