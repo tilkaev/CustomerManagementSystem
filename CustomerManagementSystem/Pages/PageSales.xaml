@@ -9,6 +9,7 @@
       d:DesignHeight="450"
       d:DesignWidth="800"
       Title="PageInventory"
+      IsVisibleChanged="ThisPage_IsVisibleChanged"
       >
 
     <Grid>

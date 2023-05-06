@@ -54,6 +54,7 @@
                       Padding="10 0 10 0" />
 
             <PasswordBox Grid.Row="3"
+                         KeyDown="passwordBox_KeyDownEnter"
                          BorderThickness="0"
                          VerticalContentAlignment="Center"
                          x:Name="passwordBox"
@@ -116,6 +117,7 @@
                         FontWeight="Normal" />
 
                 <Button x:Name="BtnForgorPassword"
+                        Click="BtnForgorPassword_Click"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
                         Padding="0"

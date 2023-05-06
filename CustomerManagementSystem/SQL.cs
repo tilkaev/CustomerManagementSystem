@@ -16,7 +16,7 @@ namespace CustomerManagementSystem
 
         static SQL()
         {
-            connect = new SqlConnection(@"data source=TIMUR-HOME\SQLEXPRESS;initial catalog=SkladSpektr;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
+            connect = new SqlConnection(@"data source=TIMUR-HOME\SQLEXPRESS;initial catalog=CustomerManagementSystem;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
         }
 
 

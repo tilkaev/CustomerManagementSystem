@@ -5,15 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:CustomerManagementSystem.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
       Title="AddEditSale">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
             <RowDefinition />
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <DockPanel Margin="15">
@@ -35,6 +36,16 @@
                            VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
+
+            <DockPanel Margin="15 0">
+                <Label Content="Дата:"
+                       VerticalContentAlignment="Center" />
+
+                <DatePicker x:Name="btnDateOfSale"
+                            Width="90"
+                            HorizontalContentAlignment="Center" />
+            </DockPanel>
+
 
 
             <!--#region Searcher-->
@@ -120,10 +131,10 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Товар"
                                         Binding="{Binding Tovar.Name}"
-                                        IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Товар"
-                                        Binding="{Binding Qty}"/>
-                    <DataGridTextColumn Header="Товар"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn Header="Количество"
+                                        Binding="{Binding Qty}" />
+                    <DataGridTextColumn Header="Цена"
                                         Binding="{Binding Price}"
                                         IsReadOnly="True" />
                     <DataGridTextColumn Header="Сумма"
@@ -134,7 +145,7 @@
         </Border>
 
         <Grid Grid.Row="2"
-                    VerticalAlignment="Center">
+              VerticalAlignment="Center">
 
             <Button Content="Создать"
                     HorizontalAlignment="Left"
@@ -162,7 +173,8 @@
                     <Label Content="Сумма: "
                            VerticalAlignment="Center"
                            FontSize="15" />
-                    <Label x:Name="lblSum" Content="0"
+                    <Label x:Name="lblSum"
+                           Content="0"
                            FontSize="15" />
                 </StackPanel>
             </Border>

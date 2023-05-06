@@ -33,8 +33,9 @@ namespace CustomerManagementSystem.Pages
         static DataGrid staticDataGrid;
         static List<SaleDetails> listSaleTovari = new List<SaleDetails>();
 
-        public AddEditSale(int idsale =- 1)
+        public AddEditSale(int idsale = -1)
         {
+
             InitializeComponent();
             Controller.WindowAddEditSale = this;
             staticDataGrid = dataGridMain;
@@ -44,7 +45,7 @@ namespace CustomerManagementSystem.Pages
 
             this.idsale = idsale;
 
-            if (idsale != -1)
+            if (idsale != -1) // Если состояние изменить продажу
             {
                 lblName.Content = $"Изменение продажи #{idsale}";
                 btnSave.Content = "Сохранить";
@@ -105,8 +106,9 @@ namespace CustomerManagementSystem.Pages
             }
             else
             {
-                MessageBox.Show("Товар добавлен!", "Ошибка!");
-                staticDataGrid.Focus();
+                sd.Qty++;
+                //MessageBox.Show("Товар добавлен!", "Ошибка!");
+                //staticDataGrid.Focus();
             }
             staticDataGrid.Items.Refresh();
         }
@@ -115,8 +117,14 @@ namespace CustomerManagementSystem.Pages
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string longInquiry = "";
-            if (idsale != -1)
+            if (idsale != -1)   // Созданная продажа, изменить строки
             {
+                if (listSaleTovari.Count == 0) // Если товары не добавлены
+                {
+                    MessageBox.Show("Не добавлены товары для сохранения продажи!", "Документ не может быть пустым!");
+                    return;
+                }
+
                 foreach (var item in listSaleTovari)
                 {
                     longInquiry += $"Insert into деталипродажа (идпродажи, идтовара, количество, цена) values ('{idsale}', '{item.Tovar.IDTovara}', '{item.Qty}', '{item.Price}'); ";
@@ -127,8 +135,14 @@ namespace CustomerManagementSystem.Pages
                 SQL.Close();
                 Controller.Pages.mainFrame.GoBack();
             }
-            else
+            else                // Создать новую продажу
             {
+                if (listSaleTovari.Count == 0) // Если товары не добавлены
+                {
+                    MessageBox.Show("Не добавлены товары для создания продажи!", "Ошибка!");
+                    return;
+                }
+
                 longInquiry += $"Insert into продажа (идсотрудника, датапродажи) values ('{Controller.IdAuthorizedEmployee}', '{DateTime.Now}'); DECLARE @lastid INT set @lastid = @@identity; ";
                 foreach (var item in listSaleTovari)
                 {
@@ -139,6 +153,7 @@ namespace CustomerManagementSystem.Pages
                 SQL.Inquiry(firstLongInquiry + longInquiry);
                 SQL.Close();
                 Controller.Pages.mainFrame.GoBack();
+
             }
 
         }
@@ -150,8 +165,10 @@ namespace CustomerManagementSystem.Pages
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            winproductSearch.Closed += (sender2, e2) => {
+            winproductSearch.Closed += (sender2, e2) =>
+            {
                 winproductSearch = new ProductSearch();
+                lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);
             };
             winproductSearch.Show();
             winproductSearch.Focus();
@@ -159,6 +176,11 @@ namespace CustomerManagementSystem.Pages
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridMain.SelectedIndex == -1)
+            {
+                MessageBox.Show("Не выбран товар для удаления из продажи", "Ошибка");
+                return;
+            }
             listSaleTovari.RemoveAt(dataGridMain.SelectedIndex);
             dataGridMain.Items.Refresh();
             lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);

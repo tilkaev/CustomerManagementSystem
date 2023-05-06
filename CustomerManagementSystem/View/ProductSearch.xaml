@@ -96,7 +96,7 @@
 
 
 
-                <Button Content="Отмена"
+                <Button Content="Закрыть"
                         x:Name="btnCancel"
                         Click="btnCancel_Click"
                         HorizontalAlignment="Right"

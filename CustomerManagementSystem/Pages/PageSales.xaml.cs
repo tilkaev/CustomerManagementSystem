@@ -35,7 +35,7 @@ namespace CustomerManagementSystem.Pages
 
         async void UpdateTable()
         {
-            var inquiry = @"select продажа.идпродажи, concat('Продажа #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'dd.MM.yyyy', 'zh-cn' )  'Дата продажи', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи group by продажа.идпродажи, датапродажи";
+            var inquiry = @"select продажа.идпродажи, concat('Продажа #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'dd.MM.yyyy', 'zh-cn' )  'Дата продажи', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа right JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи group by продажа.идпродажи, датапродажи";
 
             SQL.SQLConnect();
             SearchTextBox.Text = "";
@@ -55,6 +55,7 @@ namespace CustomerManagementSystem.Pages
             newDataTable = SearcherDataTable.WordSearch(textToFind1, dataTableMain);
 
             dataGridMain.ItemsSource = newDataTable.AsDataView();
+            dataGridMain.Columns[0].Visibility = Visibility.Collapsed; // Скрываем первый столбец с ID
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -93,6 +94,14 @@ namespace CustomerManagementSystem.Pages
             var index = (int)newDataTable.Rows[dataGridMain.SelectedIndex][0];
 
             Controller.Pages.NewPage(new AddEditSale(index));
+        }
+
+        private void ThisPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsVisible)
+            {
+                UpdateTable();
+            }
         }
     }
 }

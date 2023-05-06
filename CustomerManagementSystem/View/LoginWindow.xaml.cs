@@ -41,6 +41,7 @@ namespace CustomerManagementSystem
 
             comboBoxUsers.SelectedIndex = 0;
             passwordBox.Password = "admin";
+            passwordBox.Focus();
 
         }
 
@@ -72,7 +73,7 @@ namespace CustomerManagementSystem
 
                 Drag_Win(this, win.Left + cor_width + x, win.Top + y);
 
-                this.Visibility = System.Windows.Visibility.Visible;
+                this.Visibility = Visibility.Visible;
             };
             win.ShowDialog();
         }
@@ -117,6 +118,19 @@ namespace CustomerManagementSystem
 
 
 
+        }
+
+        private void BtnForgorPassword_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Обратитесь к Администратору!");
+        }
+
+        private void passwordBox_KeyDownEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnLogin_Click(null, null);
+            }
         }
     }
 }
