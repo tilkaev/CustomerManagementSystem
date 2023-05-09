@@ -104,7 +104,7 @@
                         <materialDesign:PackIcon Kind="PackageVariantClosed"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Товары"
-                                     Tag="1"
+                                     Tag="Products"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
@@ -112,7 +112,15 @@
                         <materialDesign:PackIcon Kind="GiftOutline"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Продажи"
-                                     Tag="2"
+                                     Tag="Sales"
+                                     Click="Button_ClickCreatePage"
+                                     Template="{StaticResource ResourceKey=LeftMenuButton}" />
+                    </Grid>
+                    <Grid>
+                        <materialDesign:PackIcon Kind="Person"
+                                                 Style="{StaticResource IconStyleLeft}" />
+                        <RadioButton Content="Клиенты"
+                                     Tag="Customers"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
@@ -120,15 +128,15 @@
                         <materialDesign:PackIcon Kind="PackageDown"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Заказы"
-                                     Tag="3"
+                                     Tag="Orders"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
                     <Grid>
-                        <materialDesign:PackIcon Kind="Account"
+                        <materialDesign:PackIcon Kind="AccountCircle"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Сотрудники"
-                                     Tag="4"
+                                     Tag="Employees"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
@@ -136,7 +144,7 @@
                         <materialDesign:PackIcon Kind="AccountConvert"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Поставщики"
-                                     Tag="5"
+                                     Tag="Suppliers"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
@@ -144,7 +152,7 @@
                         <materialDesign:PackIcon Kind="FileChart"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Отчеты"
-                                     Tag="6"
+                                     Tag="Reports"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>

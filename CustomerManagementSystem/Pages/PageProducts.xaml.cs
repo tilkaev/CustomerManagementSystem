@@ -21,12 +21,12 @@ namespace CustomerManagementSystem
     /// <summary>
     /// Логика взаимодействия для PageInventory.xaml
     /// </summary>
-    public partial class PageInventory : Page
+    public partial class PageProducts : Page
     {
         DataTable dataTableMain;
         DataTable dataTableCategory;
         DataTable newDataTable;
-        public PageInventory()
+        public PageProducts()
         {
             InitializeComponent();
 

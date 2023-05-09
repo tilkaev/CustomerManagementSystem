@@ -18,20 +18,14 @@ using System.Windows.Shapes;
 
 namespace CustomerManagementSystem
 {
-    /// <summary>
-    /// Логика взаимодействия для Window2.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
-
-
         public MainWindow()
 
         {
             InitializeComponent();
-            Controller.Pages = new PagesController(mainFrame);
-            Controller.Pages.NewPage(new PageInventory());
+            Controller.PagesController = new PagesController(mainFrame);
+            Controller.PagesController.NewPage(new PageProducts());
 
         }
 
@@ -74,23 +68,34 @@ namespace CustomerManagementSystem
 
         private void Button_ClickCreatePage(object sender, RoutedEventArgs e)
         {
-            int indexButton = int.Parse(((RadioButton)sender).Tag.ToString());
+            var indexButton = ((RadioButton)sender).Tag.ToString();
             switch (indexButton)
             {
-                case 1:
-                    Controller.Pages.NewPage(new PageInventory());
+                case "Products":
+                    if (!(Controller.PagesController.mainFrame.Content is PageProducts))
+                        Controller.PagesController.NewPage(new PageProducts());
                     break;
-                case 2:
-                    Controller.Pages.NewPage(new PageSale());
+                case "Sales":
+                    if (!(Controller.PagesController.mainFrame.Content is PageSale))
+                        Controller.PagesController.NewPage(new PageSale());
                     break;
-                case 3:
-                    Controller.Pages.NewPage(new PageOrder());
+                case "Customers":
+                    // Страница с клиентами
                     break;
-                case 4:
-                    Controller.Pages.NewPage(new PageEmployee());
+                case "Orders":
+                    if (!(Controller.PagesController.mainFrame.Content is PageOrder))
+                        Controller.PagesController.NewPage(new PageOrder());
                     break;
-                case 5:
-                    Controller.Pages.NewPage(new PageSuppliers());
+                case "Employees":
+                    if (!(Controller.PagesController.mainFrame.Content is PageEmployee))
+                        Controller.PagesController.NewPage(new PageEmployee());
+                    break;
+                case "Suppliers":
+                    if (!(Controller.PagesController.mainFrame.Content is PageSuppliers))
+                        Controller.PagesController.NewPage(new PageSuppliers());
+                    break;
+                case "Reports":
+                    // Страница с отчетами
                     break;
             }
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="CustomerManagementSystem.View.ProductSearch"
+﻿<Window x:Class="CustomerManagementSystem.View.CustomerSearch"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,8 +12,8 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded"
-        Height="500"
-        Width="700">
+        Height="300"
+        Width="500">
 
 
     <WindowChrome.WindowChrome>
@@ -44,13 +44,14 @@
 
             <Border Background="#171E45"
                     CornerRadius="5 5 0 0"
-                    MouseDown="Border_MouseDown">
-                <Label Content="Подбор товара"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="16"
-                       Foreground="White" />
-            </Border>
+                    MouseDown="Border_MouseDown" />
+            
+            <Label Content="Выбор клиента"
+                   Margin="50 0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Foreground="White" />
 
             <!--#region Searcher-->
             <Border Background="#F0F3F5"

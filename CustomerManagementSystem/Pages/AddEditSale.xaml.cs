@@ -25,41 +25,63 @@ namespace CustomerManagementSystem.Pages
     public partial class AddEditSale : Page
     {
 
-        DataTable dataTableMain;
-        DataTable newDataTable;
-        int idsale;
-        string firstLongInquiry = "";
+        DataTable dataTableSaleDetails;
+        DataTable newDataTableSaleDetails;
+        DataTable dataTableCustomer;
+        DataTable dataTableSale;
         ProductSearch winproductSearch;
+        static int idsale = -1;
+        static DateTime datesale;
         static DataGrid staticDataGrid;
-        static List<SaleDetails> listSaleTovari = new List<SaleDetails>();
+        static List<SaleDetails> listSaleTovari;
 
-        public AddEditSale(int idsale = -1)
+        public AddEditSale(DataRowView selectedRow = null)
         {
-
             InitializeComponent();
             Controller.WindowAddEditSale = this;
             staticDataGrid = dataGridMain;
             listSaleTovari = new List<SaleDetails>();
             winproductSearch = new ProductSearch();
+            datesale = DateTime.Now.Date;
+            datePickerDateSale.Text = datesale.ToString();
 
 
-            this.idsale = idsale;
-
-            if (idsale != -1) // Если состояние изменить продажу
+            string queryCustomer = String.Format("select идклиента, наименование from клиенты");
+            SQL.SQLConnect();
+            dataTableCustomer = SQL.Inquiry(queryCustomer);
+            comboBoxCustomer.Items.Clear();
+            foreach (DataRow item in dataTableCustomer.Rows)
             {
+                comboBoxCustomer.Items.Add(item[1].ToString()); // Заполнение КомбоБокса
+            }
+
+
+            if (selectedRow != null) // Cостояние изменения продажи
+            {
+                idsale = (int)selectedRow[0];
+                datesale = DateTime.Parse(selectedRow[2].ToString());
+
+                var querySale = $@"select датапродажи, идклиента from продажа where идпродажи = {idsale}";
+                var querySaleDetails = $@"select * from деталипродажа, товары where деталипродажа.идтовара=товары.идтовара and деталипродажа.идпродажи = {idsale}";
+
+                dataTableSale = SQL.Inquiry(querySale);
+                dataTableSaleDetails = SQL.Inquiry(querySaleDetails);
+                newDataTableSaleDetails = dataTableSaleDetails.Copy();
+
                 lblName.Content = $"Изменение продажи #{idsale}";
                 btnSave.Content = "Сохранить";
 
-                var inquiry = $@"select * from деталипродажа, товары where деталипродажа.идтовара=товары.идтовара and деталипродажа.идпродажи = {idsale}";
-                SQL.SQLConnect();
-                dataTableMain = SQL.Inquiry(inquiry);
-                newDataTable = dataTableMain.Copy();
-                SQL.Close();
+                datePickerDateSale.Text = dataTableSale.Rows[0][0].ToString();
 
-                foreach (DataRow item in dataTableMain.Rows)
+                DataRow[] foundRows = dataTableCustomer.Select($"[идклиента] = '{dataTableSale.Rows[0][1]}'");
+                if (foundRows.Length > 0)
                 {
-                    firstLongInquiry += $"DELETE FROM деталипродажа where иддеталипродажа = {item[0].ToString()}; ";
+                    int index = dataTableCustomer.Rows.IndexOf(foundRows[0]);
+                    comboBoxCustomer.SelectedIndex = index;
+                }
 
+                foreach (DataRow item in dataTableSaleDetails.Rows)
+                {
                     var tovar = new Tovar()
                     {
                         IDTovara = int.Parse(item[5].ToString()),
@@ -74,17 +96,19 @@ namespace CustomerManagementSystem.Pages
                         Price = int.Parse(ssa),
                         Qty = int.Parse(item[3].ToString()),
                     };
-
                     listSaleTovari.Add(zapis);
                 }
                 lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);
-            }
 
+            }
+            SQL.Close();
             dataGridMain.ItemsSource = listSaleTovari;
+
         }
 
         public static void AddTovar(DataRow dtTovar)
         {
+
             DataRow item = dtTovar;
             var tovar = new Tovar()
             {
@@ -107,83 +131,106 @@ namespace CustomerManagementSystem.Pages
             else
             {
                 sd.Qty++;
-                //MessageBox.Show("Товар добавлен!", "Ошибка!");
-                //staticDataGrid.Focus();
             }
             staticDataGrid.Items.Refresh();
         }
 
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnSaveSale_Click(object sender, RoutedEventArgs e)
         {
-            string longInquiry = "";
-            if (idsale != -1)   // Созданная продажа, изменить строки
-            {
-                if (listSaleTovari.Count == 0) // Если товары не добавлены
-                {
-                    MessageBox.Show("Не добавлены товары для сохранения продажи!", "Документ не может быть пустым!");
-                    return;
-                }
 
+            string date = datePickerDateSale.Text;
+            if (date == null)
+                date = DateTime.Now.Date.ToString();
+
+
+            int customer_index = comboBoxCustomer.SelectedIndex;
+            if (customer_index == -1)
+            {
+                MessageBox.Show("Выберите клиента!", "Ошибка!");
+                return;
+            }
+
+            if (listSaleTovari.Count == 0) // Если товары не добавлены
+            {
+                MessageBox.Show("Не добавлены товары в документе продажа!", "Документ не может быть пустым!");
+                return;
+            }
+
+
+            string longQuery = "";
+            if (idsale == -1) // Создание продажи
+            {
+                var idcustomer = int.Parse(dataTableCustomer.Rows[1][comboBoxCustomer.SelectedIndex].ToString());
+                longQuery += $"Insert into продажа (идсотрудника, идклиента, датапродажи) values ('{Controller.IdAuthorizedEmployee}', '{idcustomer}', '{date}'); DECLARE @lastid INT set @lastid = @@identity; ";
                 foreach (var item in listSaleTovari)
                 {
-                    longInquiry += $"Insert into деталипродажа (идпродажи, идтовара, количество, цена) values ('{idsale}', '{item.Tovar.IDTovara}', '{item.Qty}', '{item.Price}'); ";
+                    longQuery += $"Insert into деталипродажа (идпродажи, идтовара, количество, цена) values (@lastid, '{item.Tovar.IDTovara}', '{item.Qty}', '{item.Price}'); ";
                 }
 
                 SQL.SQLConnect();
-                SQL.Inquiry(firstLongInquiry + longInquiry);
+                SQL.Inquiry(longQuery);
                 SQL.Close();
-                Controller.Pages.mainFrame.GoBack();
             }
-            else                // Создать новую продажу
-            {
-                if (listSaleTovari.Count == 0) // Если товары не добавлены
-                {
-                    MessageBox.Show("Не добавлены товары для создания продажи!", "Ошибка!");
-                    return;
-                }
 
-                longInquiry += $"Insert into продажа (идсотрудника, датапродажи) values ('{Controller.IdAuthorizedEmployee}', '{DateTime.Now}'); DECLARE @lastid INT set @lastid = @@identity; ";
+            else // Изменение продажи
+            {
+                var idcustomer = int.Parse(dataTableCustomer.Rows[comboBoxCustomer.SelectedIndex][0].ToString());
+                datesale = DateTime.Parse(datePickerDateSale.Text);
+                longQuery += $"UPDATE продажа SET идклиента = {idcustomer}, датапродажи = '{datesale}' WHERE идпродажи = {idsale}; ";
                 foreach (var item in listSaleTovari)
                 {
-                    longInquiry += $"Insert into деталипродажа (идпродажи, идтовара, количество, цена) values (@lastid, '{item.Tovar.IDTovara}', '{item.Qty}', '{item.Price}'); ";
+                    longQuery += $"Insert into деталипродажа (идпродажи, идтовара, количество, цена) values ('{idsale}', '{item.Tovar.IDTovara}', '{item.Qty}', '{item.Price}'); ";
                 }
 
+                var preInquiry = $"DELETE FROM деталипродажа where идпродажи = {idsale};";
+
                 SQL.SQLConnect();
-                SQL.Inquiry(firstLongInquiry + longInquiry);
+                SQL.Inquiry(preInquiry + longQuery);
                 SQL.Close();
-                Controller.Pages.mainFrame.GoBack();
-
             }
-
+            Controller.PagesController.mainFrame.GoBack();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Controller.Pages.mainFrame.GoBack();
+            Controller.PagesController.mainFrame.GoBack();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
+            lblName.Content = $"Изменение продажи #{idsale} *";
             winproductSearch.Closed += (sender2, e2) =>
             {
                 winproductSearch = new ProductSearch();
                 lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);
+                if (listSaleTovari.Count != 0 & idsale != -1)
+                {
+                    btnDeleteSale.Visibility = Visibility.Hidden;
+                }
             };
-            winproductSearch.Show();
+            winproductSearch.ShowDialog();
             winproductSearch.Focus();
         }
 
-        private void btnDel_Click(object sender, RoutedEventArgs e)
+        private void btnDelProduct_Click(object sender, RoutedEventArgs e)
         {
             if (dataGridMain.SelectedIndex == -1)
             {
                 MessageBox.Show("Не выбран товар для удаления из продажи", "Ошибка");
                 return;
             }
+
+            lblName.Content = $"Изменение продажи #{idsale} *";
+
+
             listSaleTovari.RemoveAt(dataGridMain.SelectedIndex);
             dataGridMain.Items.Refresh();
             lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);
+            if (listSaleTovari.Count == 0 & idsale != -1)
+            {
+                btnDeleteSale.Visibility = Visibility.Visible;
+            }
         }
 
 
@@ -196,6 +243,21 @@ namespace CustomerManagementSystem.Pages
             lblSum.Content = SaleDetails.SumSaleDetail(listSaleTovari);
 
         }
+
+        private void btnDeleteSale_Click(object sender, RoutedEventArgs e)
+        {
+            var resultWin = MessageBox.Show("Вы уверены что хотите удалить выбранную продажу!", "Удаление", MessageBoxButton.YesNo);
+
+            if (resultWin == MessageBoxResult.Yes)
+            {
+                var inquiry = $"DELETE FROM продажа where идпродажи = {idsale}";
+                SQL.SQLConnect();
+                SQL.Execute(inquiry);
+                SQL.Close();
+                Controller.PagesController.mainFrame.GoBack();
+            }
+        }
+
 
     }
 }

@@ -20,7 +20,7 @@ namespace CustomerManagementSystem.View
     /// <summary>
     /// Логика взаимодействия для ProductSearch.xaml
     /// </summary>
-    public partial class ProductSearch : Window
+    public partial class CustomerSearch : Window
     {
 
 
@@ -30,7 +30,7 @@ namespace CustomerManagementSystem.View
 
 
 
-        public ProductSearch()
+        public CustomerSearch()
         {
             InitializeComponent();
             var inquiry = @"select товары.идтовара, товары.название Название, категориитоваров.название Категория, товары.цена Цена, товары.колвонаскладе 'Кол-во на складе'  from товары, категориитоваров

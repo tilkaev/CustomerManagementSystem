@@ -42,7 +42,7 @@ namespace CustomerManagementSystem
             comboBoxUsers.SelectedIndex = 0;
             passwordBox.Password = "admin";
             passwordBox.Focus();
-
+            passwordBox.SelectAll();
         }
 
 

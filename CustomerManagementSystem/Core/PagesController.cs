@@ -10,7 +10,7 @@ namespace CustomerManagementSystem.Core
 {
     class PagesController
     {
-        bool importantAction = false;
+        //public bool importantAction = false;
 
         public delegate void InvokeSave();
         public InvokeSave invokeSave;
@@ -27,9 +27,14 @@ namespace CustomerManagementSystem.Core
 
         public void NewPage(Page page)
         {
+
+            mainFrame.Navigate(page);
+            currentPage = page;
+
+            /*
             if (importantAction)
             {
-                var result = MessageBox.Show("Данные были изменены. Сохранить изменения?", "Спектр Склад", MessageBoxButton.YesNoCancel);
+                var result = MessageBox.Show("Данные были изменены. Сохранить изменения?", "Спектр Клиент", MessageBoxButton.YesNoCancel);
                 if (result is MessageBoxResult.Yes)
                 {
                     //Save changes //////////////////////////////////////////////////////
@@ -50,10 +55,42 @@ namespace CustomerManagementSystem.Core
             }
             else
             {
-                mainFrame.Navigate(page);
-                currentPage = page;
+
             }
+            */
         }
+
+        /*
+        public void CanGoBack()
+        {
+            if (importantAction)
+            {
+                var result = MessageBox.Show("Данные были изменены. Отменить изменения?", "Спектр Клиент", MessageBoxButton.YesNoCancel);
+                if (result is MessageBoxResult.Yes)
+                {
+                    //Save changes //////////////////////////////////////////////////////
+                    invokeSave();
+                    mainFrame.GoBack();
+                    currentPage = mainFrame.Content as Page;
+                }
+                else if (result is MessageBoxResult.No) // Undo changes
+                {
+                    mainFrame.GoBack();
+                    currentPage = mainFrame.Content as Page;
+                }
+                else if (result is MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+                importantAction = false;
+            }
+            else
+            {
+                mainFrame.GoBack();
+                currentPage = mainFrame.Content as Page;
+                importantAction = false;
+            }
+        }*/
 
 
     }

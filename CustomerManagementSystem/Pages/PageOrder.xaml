@@ -122,8 +122,9 @@
                 CornerRadius="5"
                 BorderThickness="1"
                 BorderBrush="#171E45">
-            <DataGrid CanUserSortColumns="False"
+            <DataGrid CanUserSortColumns="True"
                       x:Name="dataGridMain"
+                      MouseDoubleClick="dataGridMain_MouseDoubleClick"
                       ColumnWidth="*"
                       MinRowHeight="18"
                       IsReadOnly="True"

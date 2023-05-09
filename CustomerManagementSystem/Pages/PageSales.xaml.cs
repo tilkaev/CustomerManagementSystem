@@ -35,7 +35,8 @@ namespace CustomerManagementSystem.Pages
 
         async void UpdateTable()
         {
-            var inquiry = @"select продажа.идпродажи, concat('Продажа #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'dd.MM.yyyy', 'zh-cn' )  'Дата продажи', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа right JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи group by продажа.идпродажи, датапродажи";
+            dataGridMain.Visibility = Visibility.Hidden;
+            var inquiry = @"select продажа.идпродажи, concat('Продажа #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'yyyy.MM.dd', 'zh-cn' )  'Дата продажи', клиенты.наименование 'Организация', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа  right JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи JOIN клиенты ON клиенты.идклиента = продажа.идклиента group by продажа.идпродажи, датапродажи, клиенты.наименование ORDER BY 'Дата продажи' DESC";
 
             SQL.SQLConnect();
             SearchTextBox.Text = "";
@@ -46,6 +47,8 @@ namespace CustomerManagementSystem.Pages
             await Task.Delay(100);
             dataGridMain.Columns[0].Visibility = Visibility.Collapsed; // Скрываем первый столбец с ID
 
+            dataGridMain.Visibility = Visibility.Visible;
+            dataGridMain.Columns[2].SortDirection = System.ComponentModel.ListSortDirection.Descending;
         }
 
         private void Search_Changed(object sender, TextChangedEventArgs e)
@@ -60,7 +63,7 @@ namespace CustomerManagementSystem.Pages
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Controller.Pages.NewPage(new AddEditSale());
+            Controller.PagesController.NewPage(new AddEditSale());
         }
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
@@ -91,9 +94,16 @@ namespace CustomerManagementSystem.Pages
             
             if (dataGridMain.SelectedIndex == -1)
                 return;
-            var index = (int)newDataTable.Rows[dataGridMain.SelectedIndex][0];
+            DataRow dataRow = newDataTable.Rows[dataGridMain.SelectedIndex];
 
-            Controller.Pages.NewPage(new AddEditSale(index));
+            DataRowView selectedRow = (DataRowView)dataGridMain.SelectedItem;
+
+            if (selectedRow != null)
+            {
+                string value = selectedRow[0].ToString();
+                Controller.PagesController.NewPage(new AddEditSale(selectedRow));
+            }
+
         }
 
         private void ThisPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

@@ -67,6 +67,9 @@
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\PagesController.cs" />
     <Compile Include="Core\SearcherDataTable.cs" />
+    <Compile Include="Pages\AddEditOrder.xaml.cs">
+      <DependentUpon>AddEditOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddEditSale.xaml.cs">
       <DependentUpon>AddEditSale.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,9 @@
     <Compile Include="View\AddEditProduct.xaml.cs">
       <DependentUpon>AddEditProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CustomerSearch.xaml.cs">
+      <DependentUpon>CustomerSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ProductSearch.xaml.cs">
       <DependentUpon>ProductSearch.xaml</DependentUpon>
     </Compile>
@@ -105,6 +111,10 @@
     <Compile Include="View\Window4.xaml.cs">
       <DependentUpon>Window4.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\AddEditOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\AddEditSale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,6 +162,10 @@
     <Page Include="Theme\LeftMenuButtonTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomerSearch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ProductSearch.xaml">
       <SubType>Designer</SubType>

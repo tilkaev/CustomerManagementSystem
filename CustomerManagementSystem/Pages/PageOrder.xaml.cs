@@ -31,15 +31,25 @@ namespace CustomerManagementSystem.Pages
         {
 
         }
-        void UpdateTable()
+        async void UpdateTable()
         {
-            var inquiry = @"select продажа.идпродажи, concat('Заказ #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'dd.MM.yyyy', 'zh-cn' )  'Дата заказа', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи group by продажа.идпродажи, датапродажи";
+            dataGridMain.Visibility = Visibility.Hidden;
+            var inquiry = @"select продажа.идпродажи, concat('Заказ #', продажа.идпродажи) 'Номер накладной', FORMAT( продажа.датапродажи, 'yyyy.MM.dd', 'zh-cn' )  'Дата заказа', FORMAT(sum(цена*количество), 'N', 'en-us') 'Сумма' from деталипродажа JOIN продажа ON продажа.идпродажи = деталипродажа.идпродажи group by продажа.идпродажи, датапродажи order by 'Дата заказа' desc";
 
             SQL.SQLConnect();
             SearchTextBox.Text = "";
             DataTable dataTableMain = SQL.Inquiry(inquiry);
             SQL.Close();
-            dataGridMain.ItemsSource = dataTableMain.AsDataView();
+            dataGridMain.ItemsSource = dataTableMain.AsDataView(); 
+            await Task.Delay(100);
+            dataGridMain.Columns[0].Visibility = Visibility.Collapsed; // Скрываем первый столбец с ID
+
+            dataGridMain.Visibility = Visibility.Visible;
+            dataGridMain.Columns[2].SortDirection = System.ComponentModel.ListSortDirection.Descending;
+        }
+
+        private void dataGridMain_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
 
         }
     }

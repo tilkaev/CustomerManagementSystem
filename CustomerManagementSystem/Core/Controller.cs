@@ -12,9 +12,11 @@ namespace CustomerManagementSystem.Core
     {
         public static int IdAuthorizedEmployee { get; set; }
 
-        public static PagesController Pages { get; set; }
+        public static PagesController PagesController { get; set; }
 
         public static AddEditSale WindowAddEditSale { get; set; }
+
+        public static AddEditOrder WindowAddEditOrder { get; set; }
 
     }
 }
