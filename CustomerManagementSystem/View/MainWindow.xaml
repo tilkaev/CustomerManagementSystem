@@ -7,14 +7,14 @@
         xmlns:local="clr-namespace:CustomerManagementSystem"
         mc:Ignorable="d"
         Title="Window2"
-        Height="450"
+        Height="500"
         Width="1000"
         Background="Transparent"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        MinWidth="1000"
-        MinHeight="350">
+        MinHeight="500"
+        MinWidth="1000">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"
@@ -36,7 +36,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="155" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -109,10 +109,26 @@
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
                     <Grid>
-                        <materialDesign:PackIcon Kind="GiftOutline"
+                        <materialDesign:PackIcon Kind="ShoppingCart"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Продажи"
                                      Tag="Sales"
+                                     Click="Button_ClickCreatePage"
+                                     Template="{StaticResource ResourceKey=LeftMenuButton}" />
+                    </Grid>
+                    <Grid>
+                        <materialDesign:PackIcon Kind="Build"
+                                                 Style="{StaticResource IconStyleLeft}" />
+                        <RadioButton Content="Услуги"
+                                     Tag="Services"
+                                     Click="Button_ClickCreatePage"
+                                     Template="{StaticResource ResourceKey=LeftMenuButton}" />
+                    </Grid>
+                    <Grid>
+                        <materialDesign:PackIcon Kind="GiftOutline"
+                                                 Style="{StaticResource IconStyleLeft}" />
+                        <RadioButton Content="Оказание услуг"
+                                     Tag="Services"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>
