@@ -73,6 +73,9 @@
     <Compile Include="Pages\AddEditSale.xaml.cs">
       <DependentUpon>AddEditSale.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageCustomers.xaml.cs">
+      <DependentUpon>PageCustomers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageEmployee.xaml.cs">
       <DependentUpon>PageEmployee.xaml</DependentUpon>
     </Compile>
@@ -85,8 +88,8 @@
     <Compile Include="Pages\PageServices.xaml.cs">
       <DependentUpon>PageServices.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageServicesDocuments.xaml.cs">
-      <DependentUpon>PageServicesDocuments.xaml</DependentUpon>
+    <Compile Include="Pages\PageImplementedServices.xaml.cs">
+      <DependentUpon>PageImplementedServices.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageSales.xaml.cs">
       <DependentUpon>PageSales.xaml</DependentUpon>
@@ -128,6 +131,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PageCustomers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\PageEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,7 +151,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\PageServicesDocuments.xaml">
+    <Page Include="Pages\PageImplementedServices.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

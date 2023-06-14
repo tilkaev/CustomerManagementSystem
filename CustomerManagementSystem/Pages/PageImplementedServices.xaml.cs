@@ -20,11 +20,11 @@ namespace CustomerManagementSystem.Pages
     /// <summary>
     /// Логика взаимодействия для PageSale.xaml
     /// </summary>
-    public partial class PageServicesDocuments : Page
+    public partial class PageImplementedServices : Page
     {
         DataTable dataTableMain;
         DataTable newDataTable;
-        public PageServicesDocuments()
+        public PageImplementedServices()
         {
             InitializeComponent();
             
@@ -80,7 +80,7 @@ namespace CustomerManagementSystem.Pages
 
             if (resultWin == MessageBoxResult.Yes)
             {
-                var inquiry = $"DELETE FROM продажа where идпродажи = {index}";
+                var inquiry = $"DELETE FROM оказаниеуслуг where идоказаниеуслуг = {index}";
                 SQL.SQLConnect();
                 SQL.Execute(inquiry);
                 SQL.Close();
