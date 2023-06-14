@@ -23,7 +23,6 @@ namespace CustomerManagementSystem.Pages
     public partial class PageSale : Page
     {
         DataTable dataTableMain;
-        DataTable dataTableCategory;
         DataTable newDataTable;
         public PageSale()
         {
@@ -94,8 +93,7 @@ namespace CustomerManagementSystem.Pages
             
             if (dataGridMain.SelectedIndex == -1)
                 return;
-            DataRow dataRow = newDataTable.Rows[dataGridMain.SelectedIndex];
-
+            
             DataRowView selectedRow = (DataRowView)dataGridMain.SelectedItem;
 
             if (selectedRow != null)

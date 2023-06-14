@@ -88,7 +88,7 @@ namespace CustomerManagementSystem.Pages
                         Name = item[7].ToString()
                     };
 
-                    var ssa = item[4].ToString().Remove(item[4].ToString().Length - 5);
+                    var ssa = item[4].ToString();
                     var zapis = new SaleDetails()
                     {
                         ID = int.Parse(item[0].ToString()),

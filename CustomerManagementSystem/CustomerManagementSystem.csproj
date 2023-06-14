@@ -99,6 +99,9 @@
       <DependentUpon>PageSuppliers.xaml</DependentUpon>
     </Compile>
     <Compile Include="SQL.cs" />
+    <Compile Include="View\AddEditImplementedServices.xaml.cs">
+      <DependentUpon>AddEditImplementedServices.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddEditService.xaml.cs">
       <DependentUpon>AddEditService.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
     <Page Include="Theme\IconStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditImplementedServices.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AddEditService.xaml">
       <Generator>MSBuild:Compile</Generator>

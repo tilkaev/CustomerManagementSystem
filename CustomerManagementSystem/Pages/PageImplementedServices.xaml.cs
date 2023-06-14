@@ -1,4 +1,5 @@
 ﻿using CustomerManagementSystem.Core;
+using CustomerManagementSystem.View;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,7 +28,7 @@ namespace CustomerManagementSystem.Pages
         public PageImplementedServices()
         {
             InitializeComponent();
-            
+
             UpdateTable();
         }
 
@@ -35,7 +36,7 @@ namespace CustomerManagementSystem.Pages
         async void UpdateTable()
         {
             dataGridMain.Visibility = Visibility.Hidden;
-            var inquiry = @"select окусл.идуслуги, concat('Оказание услуги #', окусл.идуслуги) 'Номер накладной', FORMAT( окусл.датаоказания, 'yyyy.MM.dd', 'zh-cn' )  'Дата оказания услуги', клиенты.наименование 'Организация', сумма 'Оплата' from оказаниеуслуг окусл right join услуги усл on окусл.идуслуги = усл.идуслуги join клиенты on клиенты.идклиента = окусл.идклиента ORDER BY 'Дата оказания услуги' DESC";
+            var inquiry = @"select окусл.идоказаниеуслуг, concat('Оказание услуги #', окусл.идоказаниеуслуг) 'Номер накладной', FORMAT( окусл.датаоказания, 'yyyy.MM.dd', 'zh-cn' )  'Дата оказания услуги', клиенты.наименование 'Организация', усл.наименование Услуга, сумма 'Оплата' from оказаниеуслуг окусл right join услуги усл on окусл.идуслуги = усл.идуслуги join клиенты on клиенты.идклиента = окусл.идклиента ORDER BY 'Дата оказания услуги' DESC";
 
             SQL.SQLConnect();
             SearchTextBox.Text = "";
@@ -62,7 +63,11 @@ namespace CustomerManagementSystem.Pages
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Controller.PagesController.NewPage(new AddEditSale());
+            var window = new AddEditImplementedServices();
+            window.ShowDialog();
+
+            if (window.result == true)
+                    UpdateTable(); ;
         }
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
@@ -90,17 +95,20 @@ namespace CustomerManagementSystem.Pages
 
         private void dataGridMain_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
+
             if (dataGridMain.SelectedIndex == -1)
                 return;
-            DataRow dataRow = newDataTable.Rows[dataGridMain.SelectedIndex];
 
             DataRowView selectedRow = (DataRowView)dataGridMain.SelectedItem;
 
             if (selectedRow != null)
             {
                 string value = selectedRow[0].ToString();
-                Controller.PagesController.NewPage(new AddEditSale(selectedRow));
+                var window = new AddEditImplementedServices((int)selectedRow[0]);
+                window.ShowDialog();
+
+                if (window.result == true)
+                    UpdateTable(); ;
             }
 
         }
