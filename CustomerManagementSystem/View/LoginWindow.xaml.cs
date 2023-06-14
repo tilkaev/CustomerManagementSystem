@@ -28,14 +28,14 @@ namespace CustomerManagementSystem
         {
             InitializeComponent();
 
-            string sql = String.Format("select * from авторизациясотрудников");
+            string sql = String.Format("select сотрудники.идсотрудника, сотрудники.фамилия from авторизациясотрудников join сотрудники on авторизациясотрудников.идсотрудника = сотрудники.идсотрудника");
             SQL.SQLConnect();
             dataTable = SQL.Inquiry(sql);
             SQL.Close();
 
             foreach (DataRow item in dataTable.Rows)
             {
-                comboBoxUsers.Items.Add(item[2].ToString()); // Заполнение КомбоБокса
+                comboBoxUsers.Items.Add(item[1].ToString()); // Заполнение КомбоБокса
             }
 
 
@@ -101,7 +101,7 @@ namespace CustomerManagementSystem
             }
 
 
-            string sql = $"select * from авторизациясотрудников where _login collate Latin1_General_CS_AS like '{comboBoxUsers.SelectedItem}' and _password collate Latin1_General_CS_AS like '{password}'";
+            string sql = $"select * from авторизациясотрудников where идсотрудника = '{dataTable.Rows[comboBoxUsers.SelectedIndex][0]}' and _password collate Latin1_General_CS_AS like '{password}'";
             SQL.SQLConnect();
             DataTable dt = SQL.Inquiry(sql);
             SQL.Close();

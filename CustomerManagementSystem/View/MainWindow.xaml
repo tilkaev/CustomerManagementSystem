@@ -128,7 +128,7 @@
                         <materialDesign:PackIcon Kind="GiftOutline"
                                                  Style="{StaticResource IconStyleLeft}" />
                         <RadioButton Content="Оказание услуг"
-                                     Tag="Services"
+                                     Tag="ServiceDocuments"
                                      Click="Button_ClickCreatePage"
                                      Template="{StaticResource ResourceKey=LeftMenuButton}" />
                     </Grid>

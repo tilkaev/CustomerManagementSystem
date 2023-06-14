@@ -79,6 +79,14 @@ namespace CustomerManagementSystem
                     if (!(Controller.PagesController.mainFrame.Content is PageSale))
                         Controller.PagesController.NewPage(new PageSale());
                     break;
+                case "Services":
+                    if (!(Controller.PagesController.mainFrame.Content is PageServices))
+                        Controller.PagesController.NewPage(new PageServices());
+                    break;
+                case "ServiceDocuments":
+                    if (!(Controller.PagesController.mainFrame.Content is PageServicesDocuments))
+                        Controller.PagesController.NewPage(new PageServicesDocuments());
+                    break;
                 case "Customers":
                     // Страница с клиентами
                     break;
